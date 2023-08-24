@@ -64,7 +64,7 @@ const Customizer = () => {
       // Call backend to generate the AI image
       setGeneratingImg(true);
 
-      const res = await fetch('http://localhost:8080/api/v1/dalle'
+      const res = await fetch('https://threaditai.onrender.com//api/v1/dalle'
         , {
         method: 'POST',
         headers: {
