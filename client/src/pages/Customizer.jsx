@@ -111,6 +111,7 @@ const Customizer = () => {
       default:
         state.isLogoTexture = true;
         state.isFullTexture = false;
+        break;
     }
 
     // After setting the state, update the active filter tab UI
