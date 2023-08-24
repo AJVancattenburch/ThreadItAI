@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useRef } from 'react'
-import * as THREE from 'three';
+import PropTypes from 'prop-types'; // Import PropTypes
 import { useFrame } from '@react-three/fiber';
 import { easing } from "maath";
 import { useSnapshot } from "valtio";
@@ -41,6 +41,10 @@ const CameraRig = ({ children }) => {
 
   return <group ref={group}>{children}</group>
 }
+
+CameraRig.propTypes = {
+  children: PropTypes.node.isRequired, // Define the 'children' prop as a required node
+};
 
 
 export default CameraRig

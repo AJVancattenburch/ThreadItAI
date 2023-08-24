@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 
+import PropTypes from 'prop-types'; // Import PropTypes
+
 import CustomButton from './CustomButton';
 
 const FilePicker = ({ file, setFile, readFile }) => {
@@ -40,10 +42,15 @@ const FilePicker = ({ file, setFile, readFile }) => {
           handleClick={() => readFile('full')}
           customStyles="text-xs"
         />
-
       </div>
     </div>
   )
-}
+};
+
+FilePicker.propTypes = {
+  file: PropTypes.object.isRequired,
+  setFile: PropTypes.func.isRequired,
+  readFile: PropTypes.func.isRequired,
+};
 
 export default FilePicker

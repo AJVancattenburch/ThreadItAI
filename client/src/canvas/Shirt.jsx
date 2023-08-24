@@ -54,4 +54,4 @@ const Shirt = () => {
   )
 }
 
-export default Shirt
+export default Shirt;
