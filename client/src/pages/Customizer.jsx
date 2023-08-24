@@ -32,6 +32,7 @@ const Customizer = () => {
     stylishShirt: false,
   })
 
+
   // Show the tab's content depending on the active tab
   const generateTabContent = () => {
     switch (activeEditorTab) {
@@ -63,7 +64,8 @@ const Customizer = () => {
       // Call backend to generate the AI image
       setGeneratingImg(true);
 
-      const res = await fetch('http://localhost:8080/api/v1/dalle', {
+      const res = await fetch('http://localhost:8080/api/v1/dalle'
+        , {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -75,6 +77,8 @@ const Customizer = () => {
 
       const data = await res.json();
 
+      console.log('API Response:', data);
+     
       handleDecals(type, `data:image/png;base64,${data.photo}`)
     } catch (error) {
         alert(error)
@@ -185,4 +189,4 @@ const Customizer = () => {
   )
 }
 
-export default Customizer
+export default Customizer;
