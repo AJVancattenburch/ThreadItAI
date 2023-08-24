@@ -17,13 +17,13 @@ const CameraRig = ({ children }) => {
     const isMobile = window.innerWidth <= 768;
 
     // Set the initial position of the model
-    let targetPosition = new THREE.Vector3(-0.4, 0, 2);
+    let targetPosition = [-0.4, 0, 2];
     if (snap.intro) {
-      if (isBreakpoint) targetPosition.set(0, 0, 2);
-      if (isMobile) targetPosition.set(0, 0.2, 2.5);
+      if (isBreakpoint) targetPosition = [0, 0, 2];
+      if (isMobile) targetPosition = [0, 0.2, 2.5];
     } else {
-      if (isMobile) targetPosition.set(0, 0, 2);
-      else targetPosition.set(0, 0, 2);
+      if (isMobile) targetPosition = [0, 0, 2];
+      else targetPosition = [0, 0, 2];
     }
 
     // Set model camera position
