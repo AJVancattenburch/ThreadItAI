@@ -64,7 +64,7 @@ const Customizer = () => {
       // Call backend to generate the AI image
       setGeneratingImg(true);
 
-      const res = await fetch('https://threaditai.onrender.com//api/v1/dalle'
+      const response = await fetch('http://localhost:8080/api/v1/dalle'
         , {
         method: 'POST',
         headers: {
@@ -75,7 +75,7 @@ const Customizer = () => {
         })
       })
 
-      const data = await res.json();
+      const data = await response.json();
 
       console.log('API Response:', data);
      
@@ -89,10 +89,10 @@ const Customizer = () => {
   }
 
   // Handle the decals
-  const handleDecals = (type, res) => {
+  const handleDecals = (type, result) => {
     const decalType = DecalTypes[type];
 
-    state[decalType.stateProperty] = res;
+    state[decalType.stateProperty] = result;
 
     if (!activeFilterTab[decalType.filterTab]) {
       handleActiveFilterTab(decalType.filterTab);
@@ -107,7 +107,7 @@ const Customizer = () => {
         break;
       case "stylishShirt":
           state.isFullTexture = !activeFilterTab[tabName];
-        break;  
+        break;
       default:
         state.isLogoTexture = true;
         state.isFullTexture = false;
@@ -115,7 +115,6 @@ const Customizer = () => {
     }
 
     // After setting the state, update the active filter tab UI
-
     setActiveFilterTab((prevState) => {
       return {
         ...prevState,
@@ -131,7 +130,7 @@ const Customizer = () => {
         handleDecals(type, res);
         setActiveEditorTab("");
       })
-  } 
+  }
 
   return (
     <AnimatePresence>
@@ -145,7 +144,7 @@ const Customizer = () => {
             <div className="flex items-center min-h-screen">
               <div className="editortabs-container tabs">
                 {EditorTabs.map((tab) => (
-                  <Tab 
+                  <Tab
                     key={tab.name}
                     tab={tab}
                     handleClick={() =>
@@ -161,7 +160,7 @@ const Customizer = () => {
             className="absolute z-10 top-5 right-5"
             {...fadeAnimation}
           >
-            <CustomButton 
+            <CustomButton
               type="filled"
               title="Go Back"
               handleClick={() => state.intro = true}
@@ -173,7 +172,7 @@ const Customizer = () => {
             {...slideAnimation('up')}
           >
             {FilterTabs.map((tab) => (
-              <Tab 
+              <Tab
                 key={tab.name}
                 tab={tab}
                 isFilterTab
