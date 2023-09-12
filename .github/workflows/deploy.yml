@@ -22,6 +22,7 @@ jobs:
 
       - name: Create a file for your 🔑 on the action-machine
         run: |
+          sudo -s
           mkdir -p ~/.ssh
           echo "$EC2_PEM_KEY" > ~/.ssh/id_rsa.pem
           chmod 600 ~/.ssh/id_rsa.pem
