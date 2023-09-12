@@ -29,6 +29,7 @@ jobs:
 
       - name: Cleanup 🧹
         run: |
+          sudo -s
           sudo ssh -i ~/.ssh/id_rsa.pem -o StrictHostKeyChecking=no $EC2_USERNAME@$EC2_IP_ADDRESS << EOF
           sudo rm -rf threadit_ai
           sudo mkdir -p ~/threadit_ai/server
