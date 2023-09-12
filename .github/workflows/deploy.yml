@@ -39,11 +39,7 @@ jobs:
         run: |
           scp -i ~/.ssh/id_rsa.pem -o StrictHostKeyChecking=no -r $GITHUB_WORKSPACE $EC2_USERNAME@$EC2_IP_ADDRESS:~/$PROJECT_NAME
 
-      - name: Restart the EC2 🔃
+      - name: Copy and Run Deployment Script
         run: |
-          # Add any commands required to restart your application on the EC2 instance
-          # Example: 
-          sudo ssh -i ~/.ssh/id_rsa.pem -o StrictHostKeyChecking=no $EC2_USERNAME@$EC2_IP_ADDRESS '
-            cd $PROJECT_NAME && npm run build
-            sudo pm2 restart $PROJECT_NAME
-            '
+          scp -i ~/.ssh/id_rsa.pem -o StrictHostKeyChecking=no deploy.sh $EC2_USERNAME@$EC2_IP_ADDRESS:~/$PROJECT_NAME
+          ssh -i ~/.ssh/id_rsa.pem -o StrictHostKeyChecking=no $EC2_USERNAME@$EC2_IP_ADDRESS "bash ~/$PROJECT_NAME/deploy.sh"
