@@ -31,7 +31,7 @@ jobs:
           sudo ssh -i ~/.ssh/id_rsa.pem -o StrictHostKeyChecking=no $EC2_USERNAME@$EC2_IP_ADDRESS '
             sudo pm2 stop $PROJECT_NAME
             sudo rm -rf $PROJECT_NAME &&
-            mkdir -p $PROJECT_NAME/server &&
+            sudo mkdir -p $PROJECT_NAME/server &&
             echo "${{secrets.ENV}}" >> ~/$PROJECT_NAME/server/.env
             '
 
