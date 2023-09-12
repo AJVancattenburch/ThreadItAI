@@ -38,7 +38,7 @@ jobs:
 
       - name: Copy your code to the EC2📔
         run: |
-          sudo scp -i ~/.ssh/id_rsa.pem -o StrictHostKeyChecking=no -r $GITHUB_WORKSPACE $EC2_USERNAME@$EC2_IP_ADDRESS:~/$PROJECT_NAME
+          scp -i ~/.ssh/id_rsa.pem -o StrictHostKeyChecking=no -r $GITHUB_WORKSPACE $EC2_USERNAME@$EC2_IP_ADDRESS:~/$PROJECT_NAME
 
       - name: Restart the EC2 🔃
         run: |
