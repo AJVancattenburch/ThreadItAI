@@ -22,25 +22,28 @@ jobs:
 
       - name: Create a file for your 🔑 on the action-machine
         run: |
-          sudo -s
           mkdir -p ~/.ssh
           echo "$EC2_PEM_KEY" > ~/.ssh/id_rsa.pem
           chmod 600 ~/.ssh/id_rsa.pem
 
       - name: Cleanup 🧹
         run: |
-          sudo -s sudo ssh -i ~/.ssh/id_rsa.pem -o StrictHostKeyChecking=no $EC2_USERNAME@$EC2_IP_ADDRESS << EOF
-          sudo rm -rf threadit_ai
-          sudo mkdir -p ~/threadit_ai/server
-          echo "${{secrets.ENV}}" | sudo tee ~/threadit_ai/server/.env
-          sudo chmod 600 ~/threadit_ai/server/.env
-          EOF
+          sudo ssh -i ~/.ssh/id_rsa.pem -o StrictHostKeyChecking=no $EC2_USERNAME@$EC2_IP_ADDRESS '
+            sudo pm2 stop $PROJECT_NAME
+            sudo rm -rf $PROJECT_NAME &&
+            mkdir -p $PROJECT_NAME/server &&
+            echo "${{secrets.ENV}}" >> ~/$PROJECT_NAME/server/.env
+            '
 
       - name: Copy your code to the EC2📔
         run: |
-          scp -i ~/.ssh/id_rsa.pem -o StrictHostKeyChecking=no -r $GITHUB_WORKSPACE $EC2_USERNAME@$EC2_IP_ADDRESS:~/$PROJECT_NAME
+          sudo scp -i ~/.ssh/id_rsa.pem -o StrictHostKeyChecking=no -r $GITHUB_WORKSPACE $EC2_USERNAME@$EC2_IP_ADDRESS:~/$PROJECT_NAME
 
-      - name: Copy and Run Deployment Script
+      - name: Restart the EC2 🔃
         run: |
-          scp -i ~/.ssh/id_rsa.pem -o StrictHostKeyChecking=no deploy.sh $EC2_USERNAME@$EC2_IP_ADDRESS:~/$PROJECT_NAME
-          ssh -i ~/.ssh/id_rsa.pem -o StrictHostKeyChecking=no $EC2_USERNAME@$EC2_IP_ADDRESS "bash ~/$PROJECT_NAME/deploy.sh"
+          # Add any commands required to restart your application on the EC2 instance
+          # Example: 
+          sudo ssh -i ~/.ssh/id_rsa.pem -o StrictHostKeyChecking=no $EC2_USERNAME@$EC2_IP_ADDRESS '
+            cd $PROJECT_NAME && npm run build
+            sudo pm2 restart $PROJECT_NAME
+            '
