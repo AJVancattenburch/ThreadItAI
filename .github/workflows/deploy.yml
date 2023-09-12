@@ -35,7 +35,6 @@ jobs:
           echo "${{secrets.ENV}}" | sudo tee ~/$PROJECT_NAME/server/.env
           sudo chmod 600 ~/$PROJECT_NAME/server/.env
           EOF
-          '
 
       - name: Copy your code to the EC2📔
         run: |
