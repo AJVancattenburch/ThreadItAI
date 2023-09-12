@@ -28,7 +28,6 @@ jobs:
 
       - name: Cleanup 🧹
         run: |
-          cd .ssh
           ssh -i "my-node-server-key-pair.pem" $EC2_USERNAME@$EC2_IP_ADDRESS.us-west-2.compute.amazonaws.com
             sudo pm2 stop $PROJECT_NAME
             sudo rm -rf $PROJECT_NAME &&
