@@ -28,12 +28,14 @@ jobs:
 
       - name: Cleanup 🧹
         run: |
-          sudo ssh -i ~/.ssh/id_rsa.pem -o StrictHostKeyChecking=no $EC2_USERNAME@$EC2_IP_ADDRESS '
-            sudo pm2 stop $PROJECT_NAME
-            sudo rm -rf $PROJECT_NAME &&
-            mkdir -p /$PROJECT_NAME/server &&
-            echo "${{secrets.ENV}}" >> ~/$PROJECT_NAME/server/.env
-            '
+          sudo ssh -i ~/.ssh/id_rsa.pem -o StrictHostKeyChecking=no $EC2_USERNAME@$EC2_IP_ADDRESS << EOF
+          sudo pm2 stop $PROJECT_NAME
+          sudo rm -rf $PROJECT_NAME
+          sudo mkdir -p ~/$PROJECT_NAME/server
+          echo "${{secrets.ENV}}" | sudo tee ~/$PROJECT_NAME/server/.env
+          sudo chmod 600 ~/$PROJECT_NAME/server/.env
+          EOF
+          '
 
       - name: Copy your code to the EC2📔
         run: |
