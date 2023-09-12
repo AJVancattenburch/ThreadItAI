@@ -29,11 +29,10 @@ jobs:
       - name: Cleanup 🧹
         run: |
           sudo ssh -i ~/.ssh/id_rsa.pem -o StrictHostKeyChecking=no $EC2_USERNAME@$EC2_IP_ADDRESS << EOF
-          sudo pm2 stop $PROJECT_NAME
-          sudo rm -rf $PROJECT_NAME
-          sudo mkdir -p ~/$PROJECT_NAME/server
-          echo "${{secrets.ENV}}" | sudo tee ~/$PROJECT_NAME/server/.env
-          sudo chmod 600 ~/$PROJECT_NAME/server/.env
+          sudo rm -rf threadit_ai
+          sudo mkdir -p ~/threadit_ai/server
+          echo "${{secrets.ENV}}" | sudo tee ~/threadit_ai/server/.env
+          sudo chmod 600 ~/threadit_ai/server/.env
           EOF
 
       - name: Copy your code to the EC2📔
