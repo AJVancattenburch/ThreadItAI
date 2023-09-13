@@ -1,0 +1,49 @@
+name: Deploy to EC2 ☁️
+
+on:
+  push:
+    branches:
+      - main
+env:
+  # Setting an environment variable with the value of a configuration variable
+  EC2_IP_ADDRESS: ${{ secrets.EC2_IP_ADDRESS }}
+  EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
+  EC2_PEM_KEY: ${{ secrets.EC2_PEM_KEY }}
+  PROJECT_NAME: "threadit_ai"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Create a file for your 🔑 on the action-machine
+        run: |
+          mkdir -p ~/.ssh
+          echo "$EC2_PEM_KEY" > ~/.ssh/id_rsa.pem
+          chmod 600 ~/.ssh/id_rsa.pem
+
+      - name: Cleanup 🧹
+        run: |
+          sudo ssh -i ~/.ssh/id_rsa.pem -o StrictHostKeyChecking=no $EC2_USERNAME@$EC2_IP_ADDRESS '
+            sudo pm2 stop $PROJECT_NAME
+            sudo rm -rf $PROJECT_NAME &&
+            mkdir -p $PROJECT_NAME/server &&
+            echo "${{secrets.ENV}}" >> ~/$PROJECT_NAME/server/.env
+            '
+
+      - name: Copy your code to the EC2📔
+        run: |
+          sudo scp -i ~/.ssh/id_rsa.pem -o StrictHostKeyChecking=no -r $GITHUB_WORKSPACE $EC2_USERNAME@$EC2_IP_ADDRESS:~/$PROJECT_NAME
+
+      - name: Restart the EC2 🔃
+        run: |
+          # Add any commands required to restart your application on the EC2 instance
+          # Example: 
+          sudo ssh -i ~/.ssh/id_rsa.pem -o StrictHostKeyChecking=no $EC2_USERNAME@$EC2_IP_ADDRESS '
+            cd $PROJECT_NAME && npm run build
+            sudo pm2 restart $PROJECT_NAME
+            '
