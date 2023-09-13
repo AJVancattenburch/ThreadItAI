@@ -1,6 +1,6 @@
 import express from 'express';
 import * as dotenv from 'dotenv';
-import OpenAI from "openai";
+import OpenAI from 'openai';
 
 dotenv.config();
 
@@ -8,12 +8,12 @@ const router = express.Router();
 
 const config = {
   apiKey: process.env.OPENAI_API_KEY,
-};
+}
 
 const openai = new OpenAI(config);
 
 router.route('/').get((req, res) => {
-  res.status(200).json({ message: "Hello from the router!" })
+  res.status(200).json({ message: 'Hello from the server!' });
 });
 
 router.route('/').post(async (req, res) => {
