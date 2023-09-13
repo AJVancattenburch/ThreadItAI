@@ -32,6 +32,7 @@ const Customizer = () => {
     stylishShirt: false,
   })
 
+
   // Show the tab's content depending on the active tab
   const generateTabContent = () => {
     switch (activeEditorTab) {
