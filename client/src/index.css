@@ -28,7 +28,11 @@ html {
 }
 
 .head-text {
-  @apply xl:text-[10rem] text-[6rem] xl:leading-[11rem] leading-[7rem] font-black text-black;
+  @apply xl:text-[8rem] text-[5rem] xl:leading-[11rem] leading-[7rem] font-black text-black;
+}
+
+.sub-text {
+  @apply xl:text-[4.5rem] text-[3rem] xl:leading-[7.5rem] leading-[5.5rem] font-bold;
 }
 
 .logo-decal {

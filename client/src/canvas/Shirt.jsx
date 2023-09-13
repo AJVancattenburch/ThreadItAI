@@ -35,6 +35,7 @@ const Shirt = () => {
             position={[0, 0, 0]}
             rotation={[0, 0, 0]}
             scale={1}
+            // Is there a way to get these to look more realistic? The answer is probably in the texture itself. This is located in the public folder @ 
             map={fullTexture}
           />
         )}

@@ -12,7 +12,7 @@ const ColorPicker = () => {
       className="absolute left-full ml-3"
     >
       <SketchPicker
-        color={snap.color}
+        color={snap.color} 
         disableAlpha
         presetColors={[
           '#111',
